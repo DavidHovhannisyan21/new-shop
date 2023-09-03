@@ -322,14 +322,14 @@
                                 class="card__front-logo card__logo"
                                 
                               />
-                              <p class="card_numer">{{ cardNumber }}</p>
+                              <p class="card_numer">{{ cardNumberGet  }}</p>
                               <div class="card__space-75">
                                 <span class="card__label">Card holder</span>
-                                <p class="card__info">{{ cardHolder }}</p>
+                                <p class="card__info">{{ returningCardHolder }}</p>
                               </div>
                               <div class="card__space-25">
                                 <span class="card__label">Expires</span>
-                                <p class="card__info">{{ expires }}</p>
+                                <p class="card__info">{{ returningCardexpires }}</p>
                               </div>
                             </div>
 
@@ -337,7 +337,7 @@
                               <div class="card__black-line"></div>
                               <div class="card__back-content">
                                 <div class="card__secret">
-                                  <p class="card__secret--last">{{ cvv }}</p>
+                                  <p class="card__secret--last">{{ returningCardCVV }}</p>
                                 </div>
                                 <img
                                   class="card__back-square card__square"
@@ -363,19 +363,19 @@
                             </p>
                             <v-form ref="form" v-model="valid" lazy-validation>
                               <v-text-field
-                                v-model="cardHolder"
+                                v-model="returningCardHolder"
                                 label="CARD HOLDER FULL NAME"
                               ></v-text-field>
                               <v-text-field
-                                v-model="cardNumber"
+                                v-model=" cardNumberGet"
                                 label="NUMBERS OF CREDIT CARD"
                               ></v-text-field>
                               <v-text-field
-                                v-model="cvv"
+                                v-model="returningCardCVV"
                                 label="ENTER CVV"
                               ></v-text-field>
                               <v-text-field
-                                v-model="expires"
+                                v-model="returningCardexpires"
                                 label="EXPIRES - MONTH/YEAR"
                               ></v-text-field>
                               <v-checkbox
@@ -446,14 +446,11 @@ export default {
       },
     ],
 
-    cardNumber: null,
-    cardHolder: null,
-    cvv: null,
-    expires: null,
+    cardNumber: '',
+    cardHolder: '',
+    cvv: '',
+    expires: '',
     dialog: false,
-    notifications: false,
-    sound: true,
-    widgets: false,
     countOfItems: 0,
     styles: [
       { title: "Lifestyle", count: "1" },
@@ -556,6 +553,7 @@ export default {
     ],
   }),
   methods: {
+    
     selectClothing(index) {
       this.selectedClothing = this.clothes[index];
       this.countOfItems += 1;
@@ -565,6 +563,23 @@ export default {
       window.location.reload();
     }
   },
+  computed: {
+    cardNumberGet(){
+      return this.$store.getters.returningCardNumber
+    },
+    returningCardHolder(state){
+       return state.cardHolder
+        },
+    returningCardCVV(state){
+      return state.cvv
+        },
+     returningCardexpires(state){
+       return state.expires
+        },
+  },
+
+
+
 };
 </script>
 
