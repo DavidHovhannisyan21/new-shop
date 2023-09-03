@@ -7,9 +7,9 @@
     <v-btn icon>
         <v-icon>mdi-menu</v-icon>
     </v-btn>
-    <v-toolbat-title>
+    <v-toolbar-title>
         <span class="caption">Select</span><br>Category
-    </v-toolbat-title>
+    </v-toolbar-title>
     <v-divider vertical class="ml-5"></v-divider>
     <div style="position:absolute; margin-left:auto; margin-right: auto; left:0; right: 0; text-align: center;">
         <h4>Virtual Shop for testing</h4>

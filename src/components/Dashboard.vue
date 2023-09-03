@@ -316,11 +316,11 @@
                             <div class="card__front card__part">
                               <img
                                 class="card__front-square card__square"
-                                src="https://image.ibb.co/cZeFjx/little_square.png"
+
                               />
                               <img
                                 class="card__front-logo card__logo"
-                                src="https://www.fireeye.com/partners/strategic-technology-partners/visa-fireeye-cyber-watch-program/_jcr_content/content-par/grid_20_80_full/grid-20-left/image.img.png/1505254557388.png"
+                                
                               />
                               <p class="card_numer">{{ cardNumber }}</p>
                               <div class="card__space-75">
@@ -341,11 +341,11 @@
                                 </div>
                                 <img
                                   class="card__back-square card__square"
-                                  src="https://image.ibb.co/cZeFjx/little_square.png"
+                                
                                 />
                                 <img
                                   class="card__back-logo card__logo"
-                                  src="https://www.fireeye.com/partners/strategic-technology-partners/visa-fireeye-cyber-watch-program/_jcr_content/content-par/grid_20_80_full/grid-20-left/image.img.png/1505254557388.png"
+                                 
                                 />
                               </div>
                             </div>
@@ -396,7 +396,7 @@
                               <v-btn
                                 color="error"
                                 class="mr-4"
-                                @click="() => (dialog = !dialog)"
+                                @click="closeDialog"
                               >
                                 CANCEL
                               </v-btn>
@@ -560,6 +560,10 @@ export default {
       this.selectedClothing = this.clothes[index];
       this.countOfItems += 1;
     },
+    closeDialog(){
+      this.dialog = !this.closeDialog
+      window.location.reload();
+    }
   },
 };
 </script>
