@@ -322,14 +322,14 @@
                                 class="card__front-logo card__logo"
                                 
                               />
-                              <p class="card_numer">{{ cardNumberGet  }}</p>
+                              <p class="card_numer">{{ cardNumber  }}</p>
                               <div class="card__space-75">
                                 <span class="card__label">Card holder</span>
-                                <p class="card__info">{{ returningCardHolder }}</p>
+                                <p class="card__info">{{ cardHolder }}</p>
                               </div>
                               <div class="card__space-25">
                                 <span class="card__label">Expires</span>
-                                <p class="card__info">{{ returningCardexpires }}</p>
+                                <p class="card__info">{{ expires }}</p>
                               </div>
                             </div>
 
@@ -337,7 +337,7 @@
                               <div class="card__black-line"></div>
                               <div class="card__back-content">
                                 <div class="card__secret">
-                                  <p class="card__secret--last">{{ returningCardCVV }}</p>
+                                  <p class="card__secret--last">{{ cvv }}</p>
                                 </div>
                                 <img
                                   class="card__back-square card__square"
@@ -345,7 +345,6 @@
                                 />
                                 <img
                                   class="card__back-logo card__logo"
-                                 
                                 />
                               </div>
                             </div>
@@ -363,7 +362,7 @@
                             </p>
                             <v-form ref="form" v-model="valid" lazy-validation>
                               <v-text-field
-                                v-model="returningCardHolder"
+                                v-model="cardHolder"
                                 label="CARD HOLDER FULL NAME"
                               ></v-text-field>
                               <v-text-field
@@ -417,6 +416,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
   name: "Dash-board",
   data: () => ({
@@ -446,10 +446,10 @@ export default {
       },
     ],
 
-    cardNumber: '',
-    cardHolder: '',
-    cvv: '',
-    expires: '',
+    // cardNumber: '',
+    // cardHolder: '',
+    // cvv: '',
+    // expires: '',
     dialog: false,
     countOfItems: 0,
     styles: [
@@ -553,7 +553,7 @@ export default {
     ],
   }),
   methods: {
-    
+    ...mapActions(['updateCardNumber', 'updateCardHolder', 'updateCvv', 'updateExpires']),  
     selectClothing(index) {
       this.selectedClothing = this.clothes[index];
       this.countOfItems += 1;
@@ -563,7 +563,11 @@ export default {
       window.location.reload();
     }
   },
+    mounted(){
+      console.log(this.cardNumber)
+    },
   computed: {
+    ...mapState(['cardNumber', 'cardHolder', 'cvv', 'expires']),
     cardNumberGet(){
       return this.$store.getters.returningCardNumber
     },
