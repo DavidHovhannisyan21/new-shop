@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     cardHolder: '',
     cvv: '',
     expires: '',
+    countOfItems: parseInt(localStorage.getItem('countOfItems')) || 0
   },
   mutations: {
     setCardNumber(state, value) {
@@ -23,6 +24,14 @@ const store = new Vuex.Store({
     setExpires(state, value) {
       state.expires = value;
     },
+    incrementCount(state) {
+      state.countOfItems++
+      localStorage.setItem('countOfItems', state.countOfItems.toString())
+    },
+    decrementCount(state) {
+      state.countOfItems--
+    localStorage.setItem('countOfItems', state.countOfItems.toString())
+    }
   },
   actions: {
     updateCardNumber({ commit }, value) {
@@ -38,7 +47,16 @@ const store = new Vuex.Store({
     updateExpires({ commit }, value) {
       commit('setExpires', value);
     },
+    increment({ commit }) {
+      commit('incrementCount')
+    },
+    decrement({ commit }) {
+      commit('decrementCount')
+    }
   },
+  getters:{
+    getCountOfItems: state => state.countOfItems  
+  }
 });
 
 export default store;

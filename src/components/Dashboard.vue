@@ -98,8 +98,11 @@
         <v-col cols="12" sm="3" class="mt-n6 px0">
           <v-toolbar flat outlined>
             <v-icon>mdi mdi-basket-outline </v-icon>
-            COUNT OF ITEMS IN YOUR BASKET - {{ countOfItems }}
+            COUNT OF ITEMS IN YOUR BASKET - {{ getCountOfItems }}
             <v-icon>mdi mdi-basket-outline </v-icon>
+            <button @click="deleteCountFromLocalStorage">
+              <v-icon>mdi mdi-delete-alert</v-icon>
+            </button>
           </v-toolbar>
         </v-col>
         <v-col cols="12" sm="3" class="mt-n3 px-0">
@@ -332,7 +335,6 @@
                                 <p class="card__info">{{ expires }}</p>
                               </div>
                             </div>
-
                             <div class="card__back card__part">
                               <div class="card__black-line"></div>
                               <div class="card__back-content">
@@ -341,7 +343,6 @@
                                 </div>
                                 <img
                                   class="card__back-square card__square"
-                                
                                 />
                                 <img
                                   class="card__back-logo card__logo"
@@ -366,15 +367,15 @@
                                 label="CARD HOLDER FULL NAME"
                               ></v-text-field>
                               <v-text-field
-                                v-model=" cardNumberGet"
+                                v-model=" cardNumber"
                                 label="NUMBERS OF CREDIT CARD"
                               ></v-text-field>
                               <v-text-field
-                                v-model="returningCardCVV"
+                                v-model="cvv"
                                 label="ENTER CVV"
                               ></v-text-field>
                               <v-text-field
-                                v-model="returningCardexpires"
+                                v-model="expires"
                                 label="EXPIRES - MONTH/YEAR"
                               ></v-text-field>
                               <v-checkbox
@@ -416,7 +417,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Dash-board",
   data: () => ({
@@ -445,13 +446,12 @@ export default {
         href: "breadcrumbs_shoes",
       },
     ],
-
-    // cardNumber: '',
-    // cardHolder: '',
-    // cvv: '',
-    // expires: '',
+    cardNumber: '',
+    cardHolder: '',
+    cvv: '',
+    expires: '',
     dialog: false,
-    countOfItems: 0,
+    countOfItems: parseInt(localStorage.getItem('countOfItems')) || 0,
     styles: [
       { title: "Lifestyle", count: "1" },
       { title: "Running", count: "23" },
@@ -552,38 +552,29 @@ export default {
       },
     ],
   }),
+  computed: {
+    ...mapGetters(['getCountOfItems'])
+  },
   methods: {
-    ...mapActions(['updateCardNumber', 'updateCardHolder', 'updateCvv', 'updateExpires']),  
+    ...mapActions(['increment', 'decrement']),
     selectClothing(index) {
       this.selectedClothing = this.clothes[index];
-      this.countOfItems += 1;
+      this.increment();
     },
     closeDialog(){
       this.dialog = !this.closeDialog
       window.location.reload();
+    },
+    deleteCountFromLocalStorage() {
+      localStorage.removeItem('countOfItems');
+      window.location.reload();
+    },
+  },
+  watch: {
+    getCountOfItems(newValue) {
+      localStorage.setItem('countOfItems', newValue.toString());
     }
-  },
-    mounted(){
-      console.log(this.cardNumber)
-    },
-  computed: {
-    ...mapState(['cardNumber', 'cardHolder', 'cvv', 'expires']),
-    cardNumberGet(){
-      return this.$store.getters.returningCardNumber
-    },
-    returningCardHolder(state){
-       return state.cardHolder
-        },
-    returningCardCVV(state){
-      return state.cvv
-        },
-     returningCardexpires(state){
-       return state.expires
-        },
-  },
-
-
-
+  }
 };
 </script>
 
